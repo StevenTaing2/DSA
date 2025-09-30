@@ -1,18 +1,32 @@
 #include <vector>
+#include <string>
+#include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
 class Solution {
 public:
-    int largestAltitude(vector<int>& gain) {
-        int sum{ 0 };
-        int highestAltitude = sum;
+    int maxFreqSum(string s) {
+        unordered_map<char, int> letterString;
+        int maxVowel = 0;
+        int maxCon = 0;
+        for (int i = 0; i < s.size(); ++i) {
+            if (letterString.count(s[i]) > 0) {
+                letterString[s[i]] += 1;
+            }
+            else {
+                letterString[s[i]] = 1;
+            }
 
-        for (int i : gain) {
-            sum += i;
-            if (sum > highestAltitude) highestAltitude = sum;
+            if (letterString[s[i]] > maxVowel && (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')) {
+                maxVowel = letterString[s[i]];
+            }
+            else if (letterString[s[i]] > maxCon && (s[i] != 'a' && s[i] != 'e' && s[i] != 'i' && s[i] != 'o' && s[i] != 'u')) {
+                cout << s[i] << endl;
+                maxCon = letterString[s[i]];
+            }
         }
-
-        return highestAltitude;
+        return maxCon + maxVowel;
     }
 };
